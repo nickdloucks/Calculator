@@ -9,8 +9,8 @@
 
 //number objects to be constructed/modified by button clicks
  var no1Obj = {
-   numStr : '',
-   currentNum : true
+   numStr : '', // this attribute holds a string that represents the first operand
+   currentNum : true // this attribute will get toggled, depending which operand is being constructed
  }
 
  var no2Obj = {
@@ -20,42 +20,42 @@
 
 //object storing the name of the most recetly clicked operator button
 var currentOp = {
-  name : ''
+  name : '' // the name of the current operator, which will tell the program which arithmetic callback function to use
 }
 
 //operator functions:
  function plus(num1, num2){ // function to be used as a callback for the "+" button's event listener
-   var float1 = Number(num1.numStr);
-   var float2 = Number(num2.numStr);
-   var thisOp = float1 + float2;
+   var float1 = Number(num1.numStr); // convert the first operand from a string to a floating point number
+   var float2 = Number(num2.numStr); // convert the second operand from a string to a floating point number
+   var thisOp = float1 + float2; // perform addition on the two operands
    return thisOp;
  }
  function minus(num1, num2){ // function to be used as a callback for the "-" button's event listener
    var float1 = Number(num1.numStr);
    var float2 = Number(num2.numStr);
-   var thisOp = float1 - float2;
+   var thisOp = float1 - float2; // perform subtraction on the two operands
    return thisOp;
  }
  function times(num1, num2){ // function to be used as a callback for the "*" button's event listener
    var float1 = Number(num1.numStr);
    var float2 = Number(num2.numStr);
-   var thisOp = float1 * float2;
+   var thisOp = float1 * float2; // perform multiplication on the two operands
    return thisOp;
  }
  function divide(num1, num2){ // function to be used as a callback for the "/" button's event listener
    var float1 = Number(num1.numStr);
    var float2 = Number(num2.numStr);
-   var thisOp = float1 / float2;
+   var thisOp = float1 / float2; // perform division on the two operands
    return thisOp;
  }
 
-$(document).ready(function(){
+$(document).ready(function(){ // once the page is ready:
   //number building: create a number to be used as a operand by concatinating digits in a string
-  $('.number').click(function(){
-    var currentClick = ($(this).val());
-    if (no1Obj.currentNum) {
-      no1Obj.numStr = no1Obj.numStr.concat(currentClick);
-      $('#display').val(no1Obj.numStr);
+  $('.number').click(function(){ // event listener for buttons in the <.number> class
+    var currentClick = ($(this).val()); // grab the value from the clicked button // MAYBE USE <let> INSTEAD OF <var> in this definition
+    if (no1Obj.currentNum) { // depending on which operand is currnetly being created:
+      no1Obj.numStr = no1Obj.numStr.concat(currentClick); // add the value from the button to the <numStr> of the current operand object
+      $('#display').val(no1Obj.numStr); // display the updated number string
       $('#output').html(no1Obj.numStr + ' ___no 1 current');
     }else{
       no2Obj.numStr = no2Obj.numStr.concat(currentClick);
@@ -64,15 +64,15 @@ $(document).ready(function(){
     }
   });
 
-  $('.operator').click(function(){
-    if (no1Obj.currentNum){
+  $('.operator').click(function(){ // event listener for buttons in the <.operator> class
+    if (no1Obj.currentNum){ // first toggle which number object is the current operand being written
       no1Obj.currentNum = false;
       no2Obj.currentNum = true;
     }
 
 
     $('#output').html('current number changed');//works up to here with switching currentNum
-    currentOp.name = ($(this).attr('id'));///// works up to here with changing currentOp
+    currentOp.name = ($(this).attr('id'));// declare which arithmetic operation is to be performed on the two operands so the program knows which callback to use
     $('#output').html(currentOp.name);
   });
 
